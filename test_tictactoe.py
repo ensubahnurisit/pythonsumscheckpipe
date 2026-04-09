@@ -1,36 +1,24 @@
 import pytest
-from your_module import func, ifwin  # replace 'your_module' with the filename without .py
+from tictactoe_logic import func, ifwin
 
 def test_ifwin_rows():
-    # Winning by first row
-    done = ["00", "01", "02"]
-    assert ifwin(done) == True
-    # Not enough moves
-    done = ["00", "01"]
-    assert ifwin(done) == False
+    assert ifwin(["00","01","02"]) == True
+    assert ifwin(["10","11","12"]) == True
+    assert ifwin(["20","21","22"]) == True
+    assert ifwin(["00","01"]) == False
 
 def test_ifwin_columns():
-    # Winning by first column
-    done = ["00", "10", "20"]
-    assert ifwin(done) == True
-    # Winning by second column
-    done = ["01", "11", "21"]
-    assert ifwin(done) == True
+    assert ifwin(["00","10","20"]) == True
+    assert ifwin(["01","11","21"]) == True
+    assert ifwin(["02","12","22"]) == True
 
 def test_ifwin_diagonals():
-    # Main diagonal
-    done = ["00", "11", "22"]
-    assert ifwin(done) == True
-    # Anti-diagonal
-    done = ["02", "11", "20"]
-    assert ifwin(done) == True
+    assert ifwin(["00","11","22"]) == True
+    assert ifwin(["02","11","20"]) == True
 
-def test_func_modifies_board(capsys):
+def test_func_modifies_board():
     val = ["00","01","02","10","11","12","20","21","22"]
-    choice = "00"
-    func(val, choice, "X")
-    captured = capsys.readouterr()
-    # func prints the board; check the first element is replaced
-    assert val[0] == "X"
-    # Check printed output contains X in first row
-    assert "X" in captured.out
+    board = func(val, "00", "X")
+    assert board[0][0] == "X"
+    board = func(val, "11", "O")
+    assert board[1][1] == "O"
